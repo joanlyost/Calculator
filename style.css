@@ -7,6 +7,17 @@
 .backspace-btn {
     margin: 4px 25px;
     float: right;
+    padding: 0px 10px;
+    border-radius: 10%;
+}
+
+.backspace-btn:hover {
+    background-color: rgb(172, 209, 241);
+}
+
+.backspace-btn:active {
+    background-color: rgb(141, 192, 237);
+    font-weight: bold;
 }
 
 .container {
@@ -41,4 +52,13 @@
     width: 100px;
     box-sizing: border-box;
     border-radius: 3%;
+}
+
+.btn:hover {
+    background-color: rgb(192, 223, 251);
+}
+
+.btn:active {
+    background-color: rgb(92, 175, 248);
+    font-weight: bold;
 }
