@@ -1,0 +1,44 @@
+
+.input {
+    width: 510px;
+    height: 30px;
+}
+
+.backspace-btn {
+    margin: 4px 25px;
+    float: right;
+}
+
+.container {
+    background-color: aliceblue;
+    width: 540px;
+    height: 360px;
+}
+
+
+.btn-container {
+    background-color: rgb(141, 202, 255);
+    width: 520px;    
+    height: 270px;
+    display: flex;
+    border-radius: 10px;
+}
+
+.line {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 5px 5px;
+    flex-basis: 1 1;
+}
+
+.btn {
+    background-color: aliceblue;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    margin: 4px 10px;
+    width: 100px;
+    box-sizing: border-box;
+    border-radius: 3%;
+}
