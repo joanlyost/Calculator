@@ -2,6 +2,7 @@
 .input {
     width: 510px;
     height: 30px;
+    pointer-events: none;
 }
 
 .backspace-btn {
@@ -25,7 +26,6 @@
     width: 540px;
     height: 360px;
 }
-
 
 .btn-container {
     background-color: rgb(141, 202, 255);
@@ -59,6 +59,15 @@
 }
 
 .btn:active {
+    background-color: rgb(92, 175, 248);
+    font-weight: bold;
+    transform: scale(1.01);
+    transition: 0.20s;
+}
+
+.btn-temp {
+    transition: 0.20s;
+    transform: scale(1.01);
     background-color: rgb(92, 175, 248);
     font-weight: bold;
 }
