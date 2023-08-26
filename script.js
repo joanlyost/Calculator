@@ -10,8 +10,8 @@ const numSign = document.querySelector("[data-minus-plus]");
 
 btns.forEach((btn) => btn.addEventListener("transitionend", removeTransition));
 
-equal.addEventListener("click", result);
-window.addEventListener("keydown", result);
+equal.addEventListener("click", getResult);
+window.addEventListener("keydown", getResult);
 
 numBtns.forEach((btn) => btn.addEventListener("click", numInput));
 window.addEventListener("keydown", numInput);
@@ -26,22 +26,25 @@ numSign.addEventListener("click", changeInput);
 window.addEventListener("keydown", changeInput);
 
 function changeInput(e) {
-    let lastIndex = display.value.lastIndexOf(" -");
+    let lastIndexMinus = display.value.lastIndexOf(" -");
     let lastValue = display.value[display.value.length - 1];
+    const opList = ["/", "*", "+", "-", "^", "%"];
+    console.log(display.value);
  
     if(lastValue !== " " && (e.type === "click" || e.key === "F9")) {
-        if(display.value[0] === "-") {
-            display.value = display.value.slice(1);
-
-        } else if (display.value.includes(" -") && opCheck()) {
+     
+        if (display.value.includes(" -") && checkOp()) {
             lastIndex = display.value.lastIndexOf("-");
             display.value = display.value.slice(0, lastIndex) 
             + display.value.slice(lastIndex + 1);
 
-        } else if(!display.value.includes(" ")) {
+        } else if(display.value[0] === "-" && !checkLastValue(opList)) {
+            display.value = display.value.slice(1);
+
+        } else if(!display.value.includes(" ") && display.value !== "") {
             display.value = "-" + display.value.slice(0);
 
-        } else {
+        } else if(display.value.includes(" ") && !display.value !== "") {
             lastIndex = display.value.lastIndexOf(" ");
             display.value = display.value.slice(0, lastIndex) 
             + " -" + display.value.slice(lastIndex + 1);
@@ -52,8 +55,13 @@ function changeInput(e) {
         key.classList.add("btn-temp");
     }
 
-    function opCheck() {
-        return display.value.slice(index, index + 3) !== " - ";
+    function checkOp() {
+        return display.value.slice(lastIndexMinus, lastIndexMinus + 3) !== " - ";
+    }
+    function checkLastValue(arr) {
+        return arr.some((num) => {
+            if(lastValue) return lastValue.includes(num)
+        }); 
     }
 }
 
@@ -77,24 +85,24 @@ function fnInput(e) {
 }
 
 function numInput(e) {
-    const operators = ["/", "*", "+", "-", "^", "%"];
+    const opList = ["/", "*", "+", "-", "^", "%"];
     let lastValue = display.value[display.value.length - 1];
 
     if(e.type === "click") {
-        (lastValue !== " " && mySome(operators)) 
+        (lastValue !== " " && checkLastValue(opList)) 
             ? display.value += ` ${this.dataset.num}`
             : display.value += this.dataset.num;
     }
     if(e.type === "keydown") {
         const key = document.querySelector(`[data-num="${e.key}"]`);
         if(!key) return;
-        (lastValue !== " " && mySome(operators)) 
+        (lastValue !== " " && checkLastValue(opList)) 
             ? display.value += ` ${key.dataset.num}`
             : display.value += key.dataset.num;
         key.classList.add("btn-temp");
     }
 
-    function mySome(arr) {
+    function checkLastValue(arr) {
         return arr.some((num) => {
             if(lastValue) return lastValue.includes(num)
         }); 
@@ -123,7 +131,7 @@ function removeTransition(e) {
     this.classList.remove("btn-temp-backspace");
 }
 
-function result (e) {
+function getResult (e) {
     if(e.type === "keydown") {
         const key = document.querySelector(`[data-eq="${e.key}"]`);
         if(!key) return;
@@ -143,7 +151,7 @@ function Calculator() {
     };
 
     this.calc = function (string) {
-        let op = ["operators"];
+        let op = ["opList"];
         return  string.split(" ")
                 .map(item => {
                 if (isNaN(+item)) {op.push(item); return item;};
