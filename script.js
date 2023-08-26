@@ -145,7 +145,7 @@ function Calculator() {
         "+": (a, b) => a + b,
         "-": (a, b) => a - b,
         "*": (a, b) => a * b,
-        "/": (a, b) => a / b,
+        "/": (a, b) => (b === 0) ? "OOOPS you got infinity" : a / b,
         "^": (a, b) => a ** b,
         "%": (a, b) => (a / b) * 100,
     };
