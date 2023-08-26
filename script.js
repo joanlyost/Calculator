@@ -8,7 +8,6 @@ const numBtns = document.querySelectorAll("[data-num]");
 const fnBtns = document.querySelectorAll("[data-fn]");
 const numSign = document.querySelector("[data-minus-plus]");
 
-
 btns.forEach((btn) => btn.addEventListener("transitionend", removeTransition));
 
 equal.addEventListener("click", result);
@@ -27,21 +26,23 @@ numSign.addEventListener("click", changeInput);
 window.addEventListener("keydown", changeInput);
 
 function changeInput(e) {
-    let index = display.value.lastIndexOf(" -");
+    let lastIndex = display.value.lastIndexOf(" -");
     let lastValue = display.value[display.value.length - 1];
  
     if(lastValue !== " " && (e.type === "click" || e.key === "F9")) {
         if(display.value[0] === "-") {
             display.value = display.value.slice(1);
-        } else if (display.value.includes(" -") && 
-            display.value.slice(index, index + 3) !== " - ") {
-            let lastIndex = display.value.lastIndexOf("-");
+
+        } else if (display.value.includes(" -") && opCheck()) {
+            lastIndex = display.value.lastIndexOf("-");
             display.value = display.value.slice(0, lastIndex) 
             + display.value.slice(lastIndex + 1);
+
         } else if(!display.value.includes(" ")) {
             display.value = "-" + display.value.slice(0);
+
         } else {
-            let lastIndex = display.value.lastIndexOf(" ");
+            lastIndex = display.value.lastIndexOf(" ");
             display.value = display.value.slice(0, lastIndex) 
             + " -" + display.value.slice(lastIndex + 1);
         }
@@ -50,34 +51,23 @@ function changeInput(e) {
         const key = document.querySelector(`[data-minus-plus]`);
         key.classList.add("btn-temp");
     }
+
+    function opCheck() {
+        return display.value.slice(index, index + 3) !== " - ";
+    }
 }
 
 function fnInput(e) {
     let lastValue = display.value[display.value.length - 1];
     
-    if(e.key === "Backspace" || this.dataset.fn === "Backspace") {
+    if(e.key === "Backspace" || this.dataset?.fn === "Backspace") {
         (lastValue === " ") 
             ? display.value = display.value.slice(0, -3)
             : display.value = display.value.slice(0, -1);
     }
-    // if(e.type === "keydown" && e.key === "Backspace") {
-    //     const key = document.querySelector(`[data-fn="${e.key}"]`);
-    //     if(!key) return;
-    //     (lastValue === " ") 
-    //         ? display.value = display.value.slice(0, -3)
-    //         : display.value = display.value.slice(0, -1);
-    //     key.classList.add("btn-temp-backspace");
-    // }
-
-    if(e.type === "click" && this.dataset.fn === "c") 
+    if(e.key === "c" || this.dataset?.fn === "c") {
         display.value = display.value = "";
-    if(e.type === "keydown" && e.key === "c") {
-        const key = document.querySelector(`[data-fn="${e.key}"]`);
-        if(!key) return;
-        display.value = display.value = "";
-        key.classList.add("btn-temp");
     }
-
     if(e.key === "Backspace" || e.key === "c") {
         const key = document.querySelector(`[data-fn="${e.key}"]`);
         (e.key === "Backspace") 
