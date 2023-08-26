@@ -13,14 +13,14 @@ btns.forEach((btn) => btn.addEventListener("transitionend", removeTransition));
 equal.addEventListener("click", getResult);
 window.addEventListener("keydown", getResult);
 
-numBtns.forEach((btn) => btn.addEventListener("click", numInput));
-window.addEventListener("keydown", numInput);
+numBtns.forEach((btn) => btn.addEventListener("click", inputNum));
+window.addEventListener("keydown", inputNum);
 
-opBtns.forEach((btn) => btn.addEventListener("click", opInput));
-window.addEventListener("keydown", opInput);
+opBtns.forEach((btn) => btn.addEventListener("click", inputOp));
+window.addEventListener("keydown", inputOp);
 
-fnBtns.forEach((btn) => btn.addEventListener("click", fnInput));
-window.addEventListener("keydown", fnInput);
+fnBtns.forEach((btn) => btn.addEventListener("click", inputAction));
+window.addEventListener("keydown", inputAction);
 
 numSign.addEventListener("click", changeInput);
 window.addEventListener("keydown", changeInput);
@@ -37,17 +37,17 @@ function changeInput(e) {
             lastIndex = display.value.lastIndexOf("-");
             display.value = display.value.slice(0, lastIndex) 
             + display.value.slice(lastIndex + 1);
+            
+        } else if(display.value.includes(" ") && !display.value !== "") {
+            lastIndex = display.value.lastIndexOf(" ");
+            display.value = display.value.slice(0, lastIndex) 
+            + " -" + display.value.slice(lastIndex + 1);
 
         } else if(display.value[0] === "-" && !checkLastValue(opList)) {
             display.value = display.value.slice(1);
 
         } else if(!display.value.includes(" ") && display.value !== "") {
             display.value = "-" + display.value.slice(0);
-
-        } else if(display.value.includes(" ") && !display.value !== "") {
-            lastIndex = display.value.lastIndexOf(" ");
-            display.value = display.value.slice(0, lastIndex) 
-            + " -" + display.value.slice(lastIndex + 1);
         }
     }
     if(e.key === "F9") {
@@ -65,7 +65,7 @@ function changeInput(e) {
     }
 }
 
-function fnInput(e) {
+function inputAction(e) {
     let lastValue = display.value[display.value.length - 1];
     
     if(e.key === "Backspace" || this.dataset?.fn === "Backspace") {
@@ -84,7 +84,7 @@ function fnInput(e) {
     }
 }
 
-function numInput(e) {
+function inputNum(e) {
     const opList = ["/", "*", "+", "-", "^", "%"];
     let lastValue = display.value[display.value.length - 1];
 
@@ -109,7 +109,7 @@ function numInput(e) {
     }
 }
 
-function opInput(e) {
+function inputOp(e) {
     if(e.type === "click") {
         (display.value === "") 
             ? display.value += this.dataset.op
